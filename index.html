@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChronoTrips – Time Travel Travel Agency</title>
+  <!-- Google Font for futuristic feel -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* CSS variables for consistent theming */
+    :root {
+      --bg: #0b0f1f;
+      --panel: #13192f;
+      --accent: #5af0ff;
+      --accent-2: #ff6ec7;
+      --text: #e8ecff;
+      --muted: #9aa4c3;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(90, 240, 255, 0.12), transparent 30%),
+                  radial-gradient(circle at 80% 0%, rgba(255, 110, 199, 0.16), transparent 30%),
+                  var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Orbitron', 'Inter', sans-serif;
+      letter-spacing: 0.5px;
+      margin: 0 0 10px;
+    }
+
+    p {
+      margin: 0 0 12px;
+      color: var(--muted);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    button {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #0c0c12;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 12px 35px rgba(90, 240, 255, 0.25);
+      filter: brightness(1.05);
+    }
+
+    header {
+      padding: 32px 8vw 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* floating glow animation in hero */
+    .hero-glow {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(90, 240, 255, 0.15) 0%, rgba(255, 110, 199, 0.12) 60%, transparent 70%);
+      filter: blur(50px);
+      animation: float 12s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2.4rem, 4vw + 1rem, 3.6rem);
+    }
+
+    .hero-text p {
+      font-size: 1.05rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(6px);
+      font-size: 0.95rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .badge span {
+      color: var(--text);
+    }
+
+    .hero-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .slogan {
+      color: var(--accent-2);
+      font-weight: 700;
+      animation: pulse 2.8s ease-in-out infinite;
+    }
+
+    main {
+      padding: 0 8vw;
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Timeline section */
+    .timeline {
+      background: var(--panel);
+      padding: 24px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .timeline-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .timeline button {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius);
+      padding: 12px;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .timeline button::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(90, 240, 255, 0.15), rgba(255, 110, 199, 0.2));
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+
+    .timeline button:hover::after {
+      opacity: 1;
+    }
+
+    .timeline button.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(90, 240, 255, 0.5), 0 10px 25px rgba(90, 240, 255, 0.18);
+    }
+
+    .timeline-info {
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Packages grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+    }
+
+    .price {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .card button {
+      align-self: flex-start;
+    }
+
+    /* Booking simulator */
+    .booking {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    input:focus, select:focus {
+      outline: 2px solid var(--accent);
+      border-color: var(--accent);
+    }
+
+    .result-box {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: var(--radius);
+      background: rgba(90, 240, 255, 0.08);
+      border: 1px solid rgba(90, 240, 255, 0.3);
+      display: none;
+    }
+
+    /* FAQ accordion */
+    .faq-item {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      cursor: pointer;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      color: var(--muted);
+      padding-right: 8px;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 200px;
+      padding-bottom: 12px;
+    }
+
+    .footer {
+      margin-top: 40px;
+      padding: 24px 8vw 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(-10px, -10px); }
+      50% { transform: translate(12px, 20px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding-top: 24px;
+      }
+      .hero-actions {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="badge">ChronoTrips <span>Time Tourism</span></div>
+        <h1>Travel Through Time with ChronoTrips</h1>
+        <p>Hop into expertly calibrated timelines and experience the wonders of the past and future with playful precision. Your paradox-free adventure begins here.</p>
+        <div class="hero-actions">
+          <button id="cta">Plan Your Trip</button>
+          <div>Rotating slogan: <span class="slogan" id="slogan">Past</span></div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h3>Time-Safe Guarantee</h3>
+        <p>Every itinerary is secured with paradox shields, chrono-insurance, and multilingual guides fluent in Ancient Latin through Neo-Binary.</p>
+        <p>Ping us 24/7 across all time zones and we will respond before you finish typing.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Timeline Section -->
+    <section aria-labelledby="timeline-title">
+      <div class="section-header">
+        <h2 id="timeline-title">Destination Timeline</h2>
+        <p>Pick an era to reveal highlights and travel advisories.</p>
+      </div>
+      <div class="timeline">
+        <div class="timeline-list" id="timeline-list">
+          <!-- Buttons injected by JS -->
+        </div>
+        <div class="timeline-info" id="timeline-info" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section aria-labelledby="packages-title">
+      <div class="section-header">
+        <h2 id="packages-title">Featured Packages</h2>
+        <p>Curated journeys with chrono-concierge support.</p>
+      </div>
+      <div class="cards-grid">
+        <article class="card">
+          <h3>Weekend in Ancient Rome</h3>
+          <p>Gladiator-free coliseum nights, artisan gelato, and sunset forum strolls.</p>
+          <div class="price">From 420 Credits</div>
+          <button aria-label="Book Weekend in Ancient Rome">Book now</button>
+        </article>
+        <article class="card">
+          <h3>Medieval Castle Tour</h3>
+          <p>Banquet with bards, forge your own insignia, and dodge the occasional dragon rumor.</p>
+          <div class="price">From 560 Credits</div>
+          <button aria-label="Book Medieval Castle Tour">Book now</button>
+        </article>
+        <article class="card">
+          <h3>Cyber City 3050</h3>
+          <p>Neon skyline flights, AI jazz lounges, and zero-latency nightlife.</p>
+          <div class="price">From 780 Credits</div>
+          <button aria-label="Book Cyber City 3050">Book now</button>
+        </article>
+      </div>
+    </section>
+
+    <!-- Booking Simulator -->
+    <section aria-labelledby="booking-title">
+      <div class="section-header">
+        <h2 id="booking-title">Booking Simulator</h2>
+        <p>Estimate your playful time distortion before you warp.</p>
+      </div>
+      <div class="booking">
+        <div class="form-grid">
+          <div>
+            <label for="name">Name</label>
+            <input id="name" type="text" placeholder="Ada Lovelace" />
+          </div>
+          <div>
+            <label for="era">Select era</label>
+            <select id="era">
+              <option value="Ancient Civilizations">Ancient Civilizations</option>
+              <option value="Middle Ages">Middle Ages</option>
+              <option value="21st Century">21st Century</option>
+              <option value="Far Future">Far Future</option>
+            </select>
+          </div>
+          <div>
+            <label for="days">Length of stay (days)</label>
+            <input id="days" type="number" min="1" max="99" value="3" />
+          </div>
+        </div>
+        <div style="margin-top:16px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+          <button id="calculate">Calculate Time Distortion</button>
+          <div class="badge" aria-live="polite">Chrono Index Ready</div>
+        </div>
+        <div class="result-box" id="result-box"></div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section aria-labelledby="faq-title">
+      <div class="section-header">
+        <h2 id="faq-title">FAQ</h2>
+        <p>Answers to our most paradoxical questions.</p>
+      </div>
+      <div id="faq-list">
+        <div class="faq-item">
+          <div class="faq-question">How do you avoid paradoxes?<span>+</span></div>
+          <div class="faq-answer"><p>We equip every traveler with temporal etiquette training and shield each trip with predictive causal nets. In short: don’t step on butterflies.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">Is it safe to bring souvenirs?<span>+</span></div>
+          <div class="faq-answer"><p>Yes, but our inspectors will certify items through the Temporal Customs Portal to ensure no unstable artifacts enter your present.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">Do you offer flexible timelines?<span>+</span></div>
+          <div class="faq-answer"><p>Absolutely. Choose canonical history, alternate branches, or rehearsal loops until you perfect your castle entrance.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="#">Contact</a>
+      <a href="#">Terms</a>
+      <a href="#">Privacy</a>
+      <a href="#">Careers across eras</a>
+    </div>
+    <div>Call us at +88-800-CHRONO or ping us on quantum channel #chronotrips</div>
+    <small>© 2125 ChronoTrips, Inc. All timelines reserved.</small>
+  </footer>
+
+  <script>
+    // Utility: rotating slogans in the hero
+    const slogans = ["Past", "Future", "Alternate Timeline", "Quantum Coast", "Tomorrowland Today"];
+    function startSloganRotation() {
+      const sloganEl = document.getElementById('slogan');
+      let index = 0;
+      setInterval(() => {
+        index = (index + 1) % slogans.length;
+        sloganEl.textContent = slogans[index];
+      }, 2200);
+    }
+
+    // Timeline data
+    const eras = [
+      {
+        name: 'Ancient Civilizations',
+        details: 'Walk the marble streets of Rome, decode hieroglyphs with pro linguists, and enjoy climate-controlled pyramids.',
+      },
+      {
+        name: 'Middle Ages',
+        details: 'Attend royal feasts, commission your own crest, and ride with knights under aurora-lit battlements.',
+      },
+      {
+        name: '21st Century',
+        details: 'Revisit iconic concerts, preview trending tech launches, and experience a nostalgia tour of your own decade.',
+      },
+      {
+        name: 'Far Future',
+        details: 'Glide through orbital gardens, taste molecular cuisine, and chat with sentient cities in pastel neon skylines.',
+      },
+    ];
+
+    function initTimeline() {
+      const list = document.getElementById('timeline-list');
+      const info = document.getElementById('timeline-info');
+
+      eras.forEach((era, i) => {
+        const btn = document.createElement('button');
+        btn.textContent = era.name;
+        btn.addEventListener('click', () => selectEra(i));
+        list.appendChild(btn);
+      });
+
+      // default selection
+      selectEra(0);
+
+      function selectEra(index) {
+        const buttons = list.querySelectorAll('button');
+        buttons.forEach((b, i) => b.classList.toggle('active', i === index));
+        info.innerHTML = `<h3>${eras[index].name}</h3><p>${eras[index].details}</p>`;
+      }
+    }
+
+    // Booking simulator logic
+    function initBookingSimulator() {
+      const button = document.getElementById('calculate');
+      const resultBox = document.getElementById('result-box');
+      const nameInput = document.getElementById('name');
+      const eraSelect = document.getElementById('era');
+      const dayInput = document.getElementById('days');
+
+      button.addEventListener('click', () => {
+        const traveler = nameInput.value.trim() || 'Time Voyager';
+        const era = eraSelect.value;
+        const days = Math.max(1, parseInt(dayInput.value, 10) || 1);
+        const randomFlux = Math.random() * 50;
+        const distortion = Math.round(randomFlux + days * 7 + traveler.length * 0.8);
+        const flavor = distortion > 120 ? 'Stable wormholes recommended.' : 'Temporal breeze expected.';
+
+        resultBox.innerHTML = `<strong>${traveler}</strong>, your <em>${era}</em> trip for <strong>${days}</strong> days has a Time Distortion Index of <strong>${distortion}</strong>. ${flavor}`;
+        resultBox.style.display = 'block';
+      });
+    }
+
+    // FAQ accordion: only one open at a time
+    function initFAQ() {
+      const faqItems = Array.from(document.querySelectorAll('.faq-item'));
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        question.addEventListener('click', () => {
+          faqItems.forEach(i => {
+            i.classList.toggle('active', i === item && !i.classList.contains('active'));
+          });
+        });
+      });
+    }
+
+    // Smooth scroll for CTA
+    function initCTA() {
+      const cta = document.getElementById('cta');
+      const bookingSection = document.getElementById('booking-title');
+      cta.addEventListener('click', () => bookingSection.scrollIntoView({ behavior: 'smooth' }));
+    }
+
+    // Initialize all widgets after DOM loads
+    document.addEventListener('DOMContentLoaded', () => {
+      startSloganRotation();
+      initTimeline();
+      initBookingSimulator();
+      initFAQ();
+      initCTA();
+    });
+  </script>
+</body>
+</html>
