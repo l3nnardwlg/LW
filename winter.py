@@ -1,7 +1,7 @@
 import turtle
 
 turtle.setup(700, 700)
-turtle.bgcolor("lightblue")
+turtle.bgcolor("snow")
 turtle.title("h = Haus | s = Schneemann | b = Baum")
 
 stift = turtle.Turtle()
