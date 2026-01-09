@@ -1,8 +1,9 @@
 import turtle
+import python 
 
 turtle.setup(700, 700)
 turtle.bgcolor("snow")
-turtle.title("h = Haus | s = Schneemann | b = Baum")
+turtle.title("h = haus | s = schneemann | b = baum ERST KLICKEN DANN PLACEN")
 
 stift = turtle.Turtle()
 stift.hideturtle()
@@ -94,7 +95,7 @@ def key_baum():
 
 turtle.listen()
 turtle.onscreenclick(set_spawn)
-turtle.onkey(key_haus, "h")
+turtle.onkey(key_haus, "h" )
 turtle.onkey(key_schnee, "s")
 turtle.onkey(key_baum, "b")
 
