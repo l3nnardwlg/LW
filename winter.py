@@ -1,6 +1,6 @@
 import turtle
 
-turtle.setup(700, 700)
+turtle.setup(500, 500)
 turtle.bgcolor("snow")
 turtle.title("h = haus | s = schneemann | b = baum ERST KLICKEN DANN PLACEN")
 
