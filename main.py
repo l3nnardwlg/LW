@@ -1,7 +1,4 @@
-"""
-Body Defender – Immune System Arena
-Simple educational 2D game using pygame only.
-"""
+
 
 import math
 import random
