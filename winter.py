@@ -1,5 +1,4 @@
 import turtle
-import python 
 
 turtle.setup(700, 700)
 turtle.bgcolor("snow")
@@ -36,7 +35,7 @@ def zeichne_haus(x, y, size=120):
         stift.left(90)
     stift.end_fill()
 
-    stift.color("black", "red")
+    stift.color("black", "darkred")
     gehe_zu(x, y + size)
     stift.begin_fill()
     stift.goto(x + size, y + size)
@@ -76,8 +75,8 @@ def zeichne_baum(x, y):
     stift.end_fill()
 
    
-    zeichne_dreieck(x - 70, y + 45,  x + 70, y + 45,  x, y + 155, "green")
-    zeichne_dreieck(x - 55, y + 95,  x + 55, y + 95,  x, y + 200, "green")
+    zeichne_dreieck(x - 70, y + 45,  x + 70, y + 45,  x, y + 155, "darkgreen")
+    zeichne_dreieck(x - 55, y + 95,  x + 55, y + 95,  x, y + 200, "darkgreen")
 
 
 def set_spawn(x, y):
